@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using ProjetoBiblioteca.Infrastructure;
 
 namespace ProjetoBiblioteca.Models
 {

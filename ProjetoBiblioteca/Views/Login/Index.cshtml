@@ -1,0 +1,30 @@
+﻿@model ProjetoBiblioteca.ViewModels.LoginVM
+
+<h1>Login</h1>
+
+<form asp-action="Index" method="post">
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Senha</label>
+        <input asp-for="Senha"
+               type="password"
+               class="form-control" />
+    </div>
+
+    @if (ViewBag.Erro != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Erro
+        </div>
+    }
+
+    <button class="btn btn-primary">
+        Entrar
+    </button>
+
+</form>

@@ -1,0 +1,51 @@
+@model ProjetoBiblioteca.Models.Usuario
+
+<div class="card p-3">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+    <div class="row g-3">
+
+        <div class="col-12 col-md-6">
+            <label asp-for="NomeCompleto" class="form-label"></label>
+            <input asp-for="NomeCompleto"
+                   class="form-control"
+                   placeholder="Ex.: Maria Joana" />
+            <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label asp-for="DataNascimento" class="form-label"></label>
+            <input asp-for="DataNascimento"
+                   type="date"
+                   class="form-control" />
+            <span asp-validation-for="DataNascimento" class="text-danger"></span>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email"
+                   class="form-control"
+                   placeholder="email@dominio.com" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label asp-for="Senha" class="form-label"></label>
+            <input asp-for="Senha"
+                   type="password"
+                   class="form-control" />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <div class="form-check">
+                <input asp-for="Status" class="form-check-input" />
+                <label asp-for="Status" class="form-check-label">
+                    Ativo
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>

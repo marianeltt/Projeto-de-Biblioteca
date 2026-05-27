@@ -5,15 +5,32 @@ namespace ProjetoBiblioteca.Models
     public class Usuario
     {
         public int Id { get; set; }
-        [Required]
-        public string NomeCompleto { get; set; }
-        [Required]
+
+        [Display(Name = "Nome completo")]
+        [Required(ErrorMessage = "Informe o nome completo.")]
+        [StringLength(120)]
+        public string NomeCompleto { get; set; } = string.Empty;
+
+        [Display(Name = "Data de nascimento")]
+        [Required(ErrorMessage = "Informe a data de nascimento.")]
+        [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        public string Senha { get; set; }
-        public bool Ativo { get; set; }
+
+        [Display(Name = "E-mail")]
+        [Required(ErrorMessage = "Informe o e-mail.")]
+        [EmailAddress(ErrorMessage = "E-mail inválido.")]
+        [StringLength(120)]
+        public string Email { get; set; } = string.Empty;
+
+        [Display(Name = "Senha")]
+        [Required(ErrorMessage = "Informe a senha.")]
+        [StringLength(50, MinimumLength = 6,
+            ErrorMessage = "A senha deve ter entre 6 e 50 caracteres.")]
+        [DataType(DataType.Password)]
+        public string Senha { get; set; } = string.Empty;
+
+        [Display(Name = "Status")]
+        [Required(ErrorMessage = "Informe o status.")]
+        public bool Status { get; set; }
     }
 }

@@ -20,9 +20,19 @@ namespace ProjetoBiblioteca.Controllers
         }
 
         // GET: Usuarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string busca)
         {
-            return View(await _context.Usuarios.ToListAsync());
+            ViewData["busca"] = busca;
+            var usuarios = _context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(busca))
+            {
+                usuarios = usuarios.Where(u =>
+                    u.NomeCompleto.Contains(busca) ||
+                    u.Email.Contains(busca));
+            }
+
+            return View(await usuarios.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
@@ -54,19 +64,24 @@ namespace ProjetoBiblioteca.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeCompleto,DataNascimento,Email,Senha,Ativo")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,NomeCompleto,DataNascimento,Email,Senha,Status")] Usuario usuario)
         {
             if (_context.Usuarios.Any(u => u.Email == usuario.Email))
             {
                 ModelState.AddModelError("Email", "Este e-mail já está cadastrado.");
+                Error("Não foi possível cadastrar.");
             }
 
             if (ModelState.IsValid)
             {
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
+
+                Success("Usuário cadastrado com sucesso.");
+
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(usuario);
         }
 
@@ -91,11 +106,16 @@ namespace ProjetoBiblioteca.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeCompleto,DataNascimento,Email,Senha,Ativo")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeCompleto,DataNascimento,Email,Senha,Status")] Usuario usuario)
         {
             if (id != usuario.Id)
             {
                 return NotFound();
+            }
+            
+            if (_context.Usuarios.Any(u => u.Email == usuario.Email && u.Id != usuario.Id))
+            {
+                ModelState.AddModelError("Email", "Este e-mail já está cadastrado.");
             }
 
             if (ModelState.IsValid)
@@ -104,6 +124,8 @@ namespace ProjetoBiblioteca.Controllers
                 {
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+                    
+                    Success("Usuário atualizado com sucesso.");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -150,9 +172,14 @@ namespace ProjetoBiblioteca.Controllers
 
             if (possuiEmprestimos)
             {
-                ModelState.AddModelError("", "Usuário possui empréstimos cadastrados.");
+                Error("Usuário possui empréstimos cadastrados.");
                 return View(usuario);
             }
+
+            _context.Usuarios.Remove(usuario);
+            await _context.SaveChangesAsync();
+
+            Success("Usuário excluído com sucesso.");
 
             if (usuario != null)
             {
@@ -167,5 +194,8 @@ namespace ProjetoBiblioteca.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+        
+        private void Success(string m) => TempData["Success"] = m;
+        private void Error(string m) => TempData["Error"] = m;
     }
 }
