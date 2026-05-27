@@ -1,0 +1,53 @@
+@model ProjetoBiblioteca.Models.Emprestimo
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h1>Detalhes do Empréstimo</h1>
+
+<hr />
+
+<dl class="row">
+
+    <dt class="col-sm-3">Usuário</dt>
+    <dd class="col-sm-9">
+        @Model.Usuario?.NomeCompleto
+    </dd>
+
+    <dt class="col-sm-3">Livro</dt>
+    <dd class="col-sm-9">
+        @Model.Livro?.NomeLivro
+    </dd>
+
+    <dt class="col-sm-3">Data Empréstimo</dt>
+    <dd class="col-sm-9">
+        @Model.DataEmprestimo.ToString("dd/MM/yyyy")
+    </dd>
+
+    <dt class="col-sm-3">Prevista Devolução</dt>
+    <dd class="col-sm-9">
+        @Model.DataPrevistaDevolucao.ToString("dd/MM/yyyy")
+    </dd>
+
+    <dt class="col-sm-3">Data Devolução</dt>
+    <dd class="col-sm-9">
+        @Model.DataRealDevolucao?.ToString("dd/MM/yyyy")
+    </dd>
+
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">
+        @Model.Status
+    </dd>
+
+    <dt class="col-sm-3">Multa</dt>
+    <dd class="col-sm-9">
+        @Model.Multa.ToString("C")
+    </dd>
+
+</dl>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Voltar
+</a>

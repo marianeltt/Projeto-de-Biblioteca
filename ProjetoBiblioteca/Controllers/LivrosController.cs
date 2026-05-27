@@ -56,6 +56,12 @@ namespace ProjetoBiblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeLivro,Autor,QuantidadeEstoque,FaixaEtariaPermitida,Categoria,AnoPublicacao")] Livro livro)
         {
+            if (livro.QuantidadeEstoque < 0)
+            {
+                ModelState.AddModelError("QuantidadeEstoque",
+                    "A quantidade em estoque não pode ser negativa.");
+            }
+            
             if (ModelState.IsValid)
             {
                 _context.Add(livro);
@@ -91,6 +97,12 @@ namespace ProjetoBiblioteca.Controllers
             if (id != livro.Id)
             {
                 return NotFound();
+            }
+            
+            if (livro.QuantidadeEstoque < 0)
+            {
+                ModelState.AddModelError("QuantidadeEstoque",
+                    "A quantidade em estoque não pode ser negativa.");
             }
 
             if (ModelState.IsValid)
@@ -140,6 +152,18 @@ namespace ProjetoBiblioteca.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var livro = await _context.Livros.FindAsync(id);
+
+            var possuiEmprestimos = await _context.Emprestimos
+                .AnyAsync(e => e.LivroId == id);
+
+            if (possuiEmprestimos)
+            {
+                ModelState.AddModelError("",
+                    "Não é possível excluir um livro com empréstimos registrados.");
+
+                return View(livro);
+            }
+
             if (livro != null)
             {
                 _context.Livros.Remove(livro);

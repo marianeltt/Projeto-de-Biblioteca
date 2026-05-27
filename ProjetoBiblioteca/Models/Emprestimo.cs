@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using ProjetoBiblioteca.Infrastructure;
 
 namespace ProjetoBiblioteca.Models
 {
@@ -15,7 +17,8 @@ namespace ProjetoBiblioteca.Models
 
         public DateTime DataPrevistaDevolucao { get; set; }
         public DateTime? DataRealDevolucao { get; set; }
-
+        
+        [Range(0, 999999)]
         public decimal Multa { get; set; }
 
         public string Status { get; set; }
