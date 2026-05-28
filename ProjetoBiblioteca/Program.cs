@@ -12,6 +12,13 @@ builder.Services.AddControllersWithViews();
 var connStr =
     builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(2);
+});
+
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connStr));
 
@@ -42,6 +49,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseRequestLocalization();
 

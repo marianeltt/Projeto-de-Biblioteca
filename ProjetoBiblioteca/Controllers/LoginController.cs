@@ -36,6 +36,10 @@ namespace ProjetoBiblioteca.Controllers
                 return View(vm);
             }
 
+            // salva login na sessão
+            HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
+            HttpContext.Session.SetString("UsuarioNome", usuario.NomeCompleto);
+
             return RedirectToAction("Index", "Home");
         }
     }

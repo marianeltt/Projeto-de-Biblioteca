@@ -4,6 +4,8 @@ namespace ProjetoBiblioteca.ViewModels
 {
     public class EmprestimoFormVM
     {
+        public int Id { get; set; }
+        
         [Required(ErrorMessage = "Selecione um usuário.")]
         public int UsuarioId { get; set; }
 

@@ -6,6 +6,29 @@
 
 <h1>Index</h1>
 
+<form asp-action="Index" method="get" class="mb-3">
+
+    <div class="input-group">
+
+        <input type="text"
+               name="busca"
+               value="@Context.Request.Query["busca"]"
+               class="form-control"
+               placeholder="Buscar livro..." />
+
+        <button type="submit"
+                class="btn btn-primary">
+            Buscar
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Limpar
+        </a>
+
+    </div>
+</form>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>

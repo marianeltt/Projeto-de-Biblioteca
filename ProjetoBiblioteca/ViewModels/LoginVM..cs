@@ -4,10 +4,10 @@ namespace ProjetoBiblioteca.ViewModels
 {
     public class LoginVM
     {
-        [Required]
+        [Required(ErrorMessage = "Informe o e-mail")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Informe a senha")]
         public string Senha { get; set; }
     }
 }

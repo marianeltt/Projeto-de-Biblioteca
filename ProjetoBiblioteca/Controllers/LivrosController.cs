@@ -20,9 +20,21 @@ namespace ProjetoBiblioteca.Controllers
         }
 
         // GET: Livros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string busca)
         {
-            return View(await _context.Livros.ToListAsync());
+            var livros = _context.Livros.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(busca))
+            {
+                livros = livros.Where(l =>
+                    l.NomeLivro.Contains(busca));
+            }
+
+            return View(
+                await livros
+                    .OrderBy(l => l.NomeLivro)
+                    .ToListAsync()
+            );
         }
 
         // GET: Livros/Details/5

@@ -23,16 +23,21 @@ namespace ProjetoBiblioteca.Controllers
         public async Task<IActionResult> Index(string busca)
         {
             ViewData["busca"] = busca;
+
             var usuarios = _context.Usuarios.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(busca))
             {
+                busca = busca.Trim().ToLower();
+
                 usuarios = usuarios.Where(u =>
-                    u.NomeCompleto.Contains(busca) ||
-                    u.Email.Contains(busca));
+                    u.NomeCompleto.ToLower().Contains(busca) ||
+                    u.Email.ToLower().Contains(busca));
             }
 
-            return View(await usuarios.ToListAsync());
+            return View(await usuarios
+                .OrderBy(u => u.NomeCompleto)
+                .ToListAsync());
         }
 
         // GET: Usuarios/Details/5

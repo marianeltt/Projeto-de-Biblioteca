@@ -4,9 +4,17 @@
 
 <form asp-action="Index" method="post">
 
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger">
+    </div>
+
     <div class="mb-3">
         <label>Email</label>
-        <input asp-for="Email" class="form-control" />
+        <input asp-for="Email"
+               class="form-control" />
+
+        <span asp-validation-for="Email"
+              class="text-danger"></span>
     </div>
 
     <div class="mb-3">
@@ -14,6 +22,9 @@
         <input asp-for="Senha"
                type="password"
                class="form-control" />
+
+        <span asp-validation-for="Senha"
+              class="text-danger"></span>
     </div>
 
     @if (ViewBag.Erro != null)
@@ -26,5 +37,11 @@
     <button class="btn btn-primary">
         Entrar
     </button>
+
+    <a asp-controller="Usuarios"
+       asp-action="Create"
+       class="btn btn-link">
+        Criar conta
+    </a>
 
 </form>

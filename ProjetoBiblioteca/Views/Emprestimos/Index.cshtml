@@ -18,6 +18,7 @@
         <th>Livro</th>
         <th>Empréstimo</th>
         <th>Prevista</th>
+        <th>Devolução Real</th>
         <th>Status</th>
         <th>Multa</th>
         <th></th>
@@ -33,6 +34,9 @@
             <td>@e.Livro?.NomeLivro</td>
             <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
             <td>@e.DataPrevistaDevolucao.ToString("dd/MM/yyyy")</td>
+            <td>
+                @(e.DataRealDevolucao?.ToString("dd/MM/yyyy") ?? "-")
+            </td>
             <td>@e.Status</td>
             <td>@e.Multa.ToString("C")</td>
 
@@ -43,7 +47,7 @@
                     Detalhes
                 </a>
 
-                @if (e.Status == "Emprestado")
+                @if (e.Status != "Devolvido")
                 {
                     <a asp-action="Devolver"
                        asp-route-id="@e.Id"
@@ -51,6 +55,12 @@
                         Devolver
                     </a>
                 }
+                
+                <a asp-action="Edit"
+                   asp-route-id="@e.Id"
+                   class="btn btn-warning btn-sm">
+                    Editar
+                </a>
 
                 <a asp-action="Delete"
                    asp-route-id="@e.Id"
