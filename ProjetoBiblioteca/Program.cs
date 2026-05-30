@@ -45,13 +45,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseSession();
 
 app.UseRequestLocalization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

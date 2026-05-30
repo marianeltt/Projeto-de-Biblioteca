@@ -7,16 +7,37 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoBiblioteca.Data;
 using ProjetoBiblioteca.Models;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ProjetoBiblioteca.Controllers
 {
     public class LivrosController : Controller
     {
+        
         private readonly AppDbContext _context;
 
         public LivrosController(AppDbContext context)
         {
             _context = context;
+        }
+        
+        public override void OnActionExecuting(
+            ActionExecutingContext context)
+        {
+            var usuarioId =
+                context.HttpContext.Session
+                    .GetInt32("UsuarioId");
+
+            Console.WriteLine("Controller: " + context.ActionDescriptor.DisplayName);
+            Console.WriteLine("UsuarioId sessão: " + usuarioId);
+
+            if (usuarioId == null)
+            {
+                context.Result =
+                    RedirectToAction("Index", "Login");
+            }
+
+            base.OnActionExecuting(context);
         }
 
         // GET: Livros

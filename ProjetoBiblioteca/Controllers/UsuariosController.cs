@@ -172,6 +172,12 @@ namespace ProjetoBiblioteca.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
+
+            if (usuario == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             var possuiEmprestimos = await _context.Emprestimos
                 .AnyAsync(e => e.UsuarioId == id);
 
@@ -186,12 +192,6 @@ namespace ProjetoBiblioteca.Controllers
 
             Success("Usuário excluído com sucesso.");
 
-            if (usuario != null)
-            {
-                _context.Usuarios.Remove(usuario);
-            }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -20,6 +20,7 @@ namespace ProjetoBiblioteca.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Index(LoginVM vm)
         {
             if (!ModelState.IsValid)
@@ -28,19 +29,39 @@ namespace ProjetoBiblioteca.Controllers
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u =>
                     u.Email == vm.Email &&
-                    u.Senha == vm.Senha);
+                    u.Senha == vm.Senha &&
+                    u.Status == true);
 
             if (usuario == null)
             {
-                ViewBag.Erro = "Login inválido";
+                ViewBag.Erro = "Login inválido ou Usuário inativo";
                 return View(vm);
             }
 
-            // salva login na sessão
-            HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
-            HttpContext.Session.SetString("UsuarioNome", usuario.NomeCompleto);
+            HttpContext.Session.SetInt32(
+                "UsuarioId",
+                usuario.Id);
 
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.SetString(
+                "UsuarioNome",
+                usuario.NomeCompleto);
+
+            Console.WriteLine(
+                "Salvou UsuarioId: " +
+                HttpContext.Session.GetInt32("UsuarioId"));
+
+            return RedirectToAction(
+                "Index",
+                "Home");
+        }
+        
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction(
+                "Index",
+                "Login");
         }
     }
 }
