@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetoBiblioteca.Data;
 using ProjetoBiblioteca.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ProjetoBiblioteca.Controllers
 {
@@ -82,9 +83,15 @@ namespace ProjetoBiblioteca.Controllers
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
 
+                HttpContext.Session.SetInt32(
+                    "UsuarioId",
+                    usuario.Id);
+
                 Success("Usuário cadastrado com sucesso.");
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(
+                    "Index",
+                    "Livros");
             }
             
             return View(usuario);

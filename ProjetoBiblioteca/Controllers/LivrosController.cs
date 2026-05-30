@@ -24,12 +24,9 @@ namespace ProjetoBiblioteca.Controllers
         public override void OnActionExecuting(
             ActionExecutingContext context)
         {
-            var usuarioId =
-                context.HttpContext.Session
-                    .GetInt32("UsuarioId");
-
-            Console.WriteLine("Controller: " + context.ActionDescriptor.DisplayName);
-            Console.WriteLine("UsuarioId sessão: " + usuarioId);
+            var usuarioId = context.HttpContext
+                .Session
+                .GetInt32("UsuarioId");
 
             if (usuarioId == null)
             {
