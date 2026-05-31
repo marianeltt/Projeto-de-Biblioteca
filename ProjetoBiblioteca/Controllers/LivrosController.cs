@@ -32,27 +32,68 @@ namespace ProjetoBiblioteca.Controllers
             {
                 context.Result =
                     RedirectToAction("Index", "Login");
+
+                return;
+            }
+
+            var usuario = _context.Usuarios
+                .FirstOrDefault(u =>
+                    u.Id == usuarioId);
+
+            if (usuario == null || !usuario.Status)
+            {
+                context.HttpContext
+                    .Session
+                    .Clear();
+
+                context.Result =
+                    RedirectToAction("Index", "Login");
+
+                return;
             }
 
             base.OnActionExecuting(context);
         }
-
+        
         // GET: Livros
-        public async Task<IActionResult> Index(string busca)
+        public async Task<IActionResult> Index(
+            string busca,
+            int pagina = 1)
         {
+            int itensPorPagina = 10;
+
             var livros = _context.Livros.AsQueryable();
 
+            // busca
             if (!string.IsNullOrWhiteSpace(busca))
             {
                 livros = livros.Where(l =>
                     l.NomeLivro.Contains(busca));
             }
 
-            return View(
-                await livros
-                    .OrderBy(l => l.NomeLivro)
-                    .ToListAsync()
-            );
+            // total de registros
+            int totalLivros =
+                await livros.CountAsync();
+
+            // calcula total de páginas
+            int totalPaginas =
+                (int)Math.Ceiling(
+                    totalLivros / (double)itensPorPagina
+                );
+
+            // pega só os itens da página atual
+            var lista = await livros
+                .OrderBy(l => l.NomeLivro)
+                .Skip((pagina - 1) * itensPorPagina)
+                .Take(itensPorPagina)
+                .ToListAsync();
+
+            // envia pra View
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalPaginas = totalPaginas;
+            ViewBag.Busca = busca;
+
+            return View(lista);
         }
 
         // GET: Livros/Details/5
@@ -92,13 +133,15 @@ namespace ProjetoBiblioteca.Controllers
                     "A quantidade em estoque não pode ser negativa.");
             }
             
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(livro);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(livro);
             }
-            return View(livro);
+
+            _context.Add(livro);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Livros/Edit/5

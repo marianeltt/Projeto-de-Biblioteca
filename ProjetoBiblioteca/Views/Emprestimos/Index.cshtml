@@ -10,65 +10,67 @@
     <a asp-action="Create" class="btn btn-primary">Novo Empréstimo</a>
 </p>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Usuário</th>
-        <th>Livro</th>
-        <th>Empréstimo</th>
-        <th>Prevista</th>
-        <th>Devolução Real</th>
-        <th>Status</th>
-        <th>Multa</th>
-        <th></th>
-    </tr>
-    </thead>
-
-    <tbody>
-    @foreach (var e in Model)
-    {
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <td>@e.Id</td>
-            <td>@e.Usuario?.NomeCompleto</td>
-            <td>@e.Livro?.NomeLivro</td>
-            <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
-            <td>@e.DataPrevistaDevolucao.ToString("dd/MM/yyyy")</td>
-            <td>
-                @(e.DataRealDevolucao?.ToString("dd/MM/yyyy") ?? "-")
-            </td>
-            <td>@e.Status</td>
-            <td>@e.Multa.ToString("C")</td>
-
-            <td class="text-end">
-                <a asp-action="Details"
-                   asp-route-id="@e.Id"
-                   class="btn btn-sm btn-info">
-                    Detalhes
-                </a>
-
-                @if (e.Status != "Devolvido")
-                {
-                    <a asp-action="Devolver"
-                       asp-route-id="@e.Id"
-                       class="btn btn-sm btn-success">
-                        Devolver
-                    </a>
-                }
-                
-                <a asp-action="Edit"
-                   asp-route-id="@e.Id"
-                   class="btn btn-warning btn-sm">
-                    Editar
-                </a>
-
-                <a asp-action="Delete"
-                   asp-route-id="@e.Id"
-                   class="btn btn-sm btn-danger">
-                    Excluir
-                </a>
-            </td>
+            <th>Id</th>
+            <th>Usuário</th>
+            <th>Livro</th>
+            <th>Empréstimo</th>
+            <th>Prevista</th>
+            <th>Devolução Real</th>
+            <th>Status</th>
+            <th>Multa</th>
+            <th></th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Id</td>
+                <td>@e.Usuario?.NomeCompleto</td>
+                <td>@e.Livro?.NomeLivro</td>
+                <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
+                <td>@e.DataPrevistaDevolucao.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @(e.DataRealDevolucao?.ToString("dd/MM/yyyy") ?? "-")
+                </td>
+                <td>@e.Status</td>
+                <td>@e.Multa.ToString("C")</td>
+
+                <td class="text-end">
+                    <a asp-action="Details"
+                       asp-route-id="@e.Id"
+                       class="btn btn-sm btn-info">
+                        Detalhes
+                    </a>
+
+                    @if (e.Status != "Devolvido")
+                    {
+                        <a asp-action="Devolver"
+                           asp-route-id="@e.Id"
+                           class="btn btn-sm btn-success">
+                            Devolver
+                        </a>
+                    }
+
+                    <a asp-action="Edit"
+                       asp-route-id="@e.Id"
+                       class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@e.Id"
+                       class="btn btn-sm btn-danger">
+                        Excluir
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

@@ -19,14 +19,32 @@ namespace ProjetoBiblioteca.Controllers
         public override void OnActionExecuting(
             ActionExecutingContext context)
         {
-            var usuarioId =
-                context.HttpContext.Session
-                    .GetInt32("UsuarioId");
+            var usuarioId = context.HttpContext
+                .Session
+                .GetInt32("UsuarioId");
 
             if (usuarioId == null)
             {
                 context.Result =
                     RedirectToAction("Index", "Login");
+
+                return;
+            }
+
+            var usuario = _context.Usuarios
+                .FirstOrDefault(u =>
+                    u.Id == usuarioId);
+
+            if (usuario == null || !usuario.Status)
+            {
+                context.HttpContext
+                    .Session
+                    .Clear();
+
+                context.Result =
+                    RedirectToAction("Index", "Login");
+
+                return;
             }
 
             base.OnActionExecuting(context);
@@ -66,6 +84,20 @@ namespace ProjetoBiblioteca.Controllers
             await _context.SaveChangesAsync();
 
             return View(emprestimos);
+        }
+        
+        public async Task<IActionResult> Atrasados()
+        {
+            var lista = await _context.Emprestimos
+                .Include(e => e.Usuario)
+                .Include(e => e.Livro)
+                .Where(e =>
+                    e.DataRealDevolucao == null &&
+                    e.DataPrevistaDevolucao < DateTime.Today)
+                .OrderBy(e => e.DataPrevistaDevolucao)
+                .ToListAsync();
+
+            return View(lista);
         }
 
         // DETALHES
@@ -131,7 +163,7 @@ namespace ProjetoBiblioteca.Controllers
                 await _context.Livros
                     .FindAsync(vm.LivroId);
 
-            if (usuario == null || livro == null)
+            if (usuario == null || livro == null)       
                 return NotFound();
 
             if (livro.QuantidadeEstoque <= 0)

@@ -22,7 +22,7 @@
                class="form-control"
                name="busca"
                value="@busca"
-               placeholder="Buscar por nome ou e-mail..." />
+               placeholder="Buscar por nome ou e-mail..."/>
 
         <button class="btn btn-outline-primary" type="submit">
             Buscar
@@ -39,42 +39,55 @@
     </div>
 </form>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Nome</th>
-        <th>Data Nascimento</th>
-        <th>E-mail</th>
-        <th>Status</th>
-        <th class="text-end">Ações</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    @foreach (var item in Model)
-    {
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <td>@item.NomeCompleto</td>
-
-            <td>@item.DataNascimento.ToShortDateString()</td>
-
-            <td>@item.Email</td>
-
-            <td>
-                @(item.Status ? "Ativo" : "Inativo")
-            </td>
-
-            <td class="text-end">
-                <a asp-action="Details"
-                   asp-route-id="@item.Id">Details</a> |
-
-                <a asp-action="Edit"
-                   asp-route-id="@item.Id">Edit</a> |
-
-                <a asp-action="Delete"
-                   asp-route-id="@item.Id">Delete</a>
-            </td>
+            <th>Nome</th>
+            <th>Data Nascimento</th>
+            <th>E-mail</th>
+            <th>Status</th>
+            <th></th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NomeCompleto</td>
+
+                <td>@item.DataNascimento.ToShortDateString()</td>
+
+                <td>@item.Email</td>
+
+                <td>
+                    @(item.Status ? "Ativo" : "Inativo")
+                </td>
+
+                <td class="text-end">
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-info">
+                        Detalhes
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-warning">
+                        Editar
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-danger">
+                        Excluir
+                    </a>
+
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

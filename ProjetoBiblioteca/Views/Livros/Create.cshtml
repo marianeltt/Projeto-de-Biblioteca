@@ -12,37 +12,37 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="NomeLivro" class="control-label"></label>
                 <input asp-for="NomeLivro" class="form-control" />
                 <span asp-validation-for="NomeLivro" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="Autor" class="control-label"></label>
                 <input asp-for="Autor" class="form-control" />
                 <span asp-validation-for="Autor" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="QuantidadeEstoque" class="control-label"></label>
                 <input asp-for="QuantidadeEstoque" class="form-control" />
                 <span asp-validation-for="QuantidadeEstoque" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="FaixaEtariaPermitida" class="control-label"></label>
                 <input asp-for="FaixaEtariaPermitida" class="form-control" />
                 <span asp-validation-for="FaixaEtariaPermitida" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="Categoria" class="control-label"></label>
                 <input asp-for="Categoria" class="form-control" />
                 <span asp-validation-for="Categoria" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="AnoPublicacao" class="control-label"></label>
                 <input asp-for="AnoPublicacao" class="form-control" />
                 <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -53,3 +53,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts { 
+    <partial name="_ValidationScriptsPartial" />
+}       

@@ -84,6 +84,18 @@ else
                     <i class="bi bi-journal-arrow-up"></i>
                     <span>Empréstimos</span>
                 </a>
+                
+                <div class="menu-section">
+                    Relatório
+                </div>
+
+                <a asp-controller="Emprestimos"
+                   asp-action="Atrasados"
+                   class="menu-item">
+
+                    <i class="bi bi-exclamation-circle"></i>
+                    <span>Empréstimos atrasados</span>
+                </a>
 
             </nav>
 
@@ -117,9 +129,17 @@ else
                 </div>
 
                 <div class="topbar-right">
+
+                    <button class="btn btn-outline-secondary me-2"
+                            id="btnTema"
+                            title="Tema escuro">
+                        <i class="bi bi-moon-fill"></i>
+                    </button>
+
                     <div class="avatar">
                         <i class="bi bi-person-circle"></i>
                     </div>
+
                 </div>
 
             </header>
@@ -151,6 +171,24 @@ else
         ?.addEventListener('click', function () {
             document.body.classList.toggle('sidebar-open');
         });
+</script>
+
+<script>
+    document
+        .getElementById("btnTema")
+        ?.addEventListener("click", function () {
+
+            document.body.classList.toggle("dark-mode");
+
+            localStorage.setItem(
+                "temaEscuro",
+                document.body.classList.contains("dark-mode")
+            );
+        });
+
+    if (localStorage.getItem("temaEscuro") === "true") {
+        document.body.classList.add("dark-mode");
+    }
 </script>
 
 </body>

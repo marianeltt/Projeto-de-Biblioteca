@@ -280,28 +280,165 @@ body.sidebar-open .sidebar-footer {
   color: var(--text);
 }
 
+/* =========================
+   MODO ESCURO
+   ========================= */
+
+body.dark-mode {
+  background: #121212 ;
+  color: #ffffff ;
+}
+
+/* área principal */
+body.dark-mode .app-main,
+body.dark-mode .container,
+body.dark-mode .container-fluid {
+  background: #121212 ;
+  color: #ffffff ;
+}
+
+/* sidebar */
+body.dark-mode .app-sidebar {
+  background: #1b1b1b ;
+  border-color: #333 ;
+}
+
+/* topo */
+body.dark-mode .topbar {
+  background: #1a1a1a ;
+  color: white ;
+  border-bottom: 1px solid #333 ;
+}
+
+/* títulos */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode label,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode a {
+  color: #ffffff ;
+}
+
+/* cards */
+body.dark-mode .card,
+body.dark-mode .card-body,
+body.dark-mode .card-header {
+  background: #1f1f1f ;
+  color: white ;
+  border-color: #333 ;
+}
+
+/* inputs */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background: #2a2a2a ;
+  color: white ;
+  border: 1px solid #444 ;
+}
+
+body.dark-mode .form-control::placeholder {
+  color: #cccccc ;
+}
+
+/* tabelas */
+body.dark-mode .table {
+  background: #1f1f1f ;
+  color: white ;
+}
+
+body.dark-mode .table thead {
+  background: #2a2a2a ;
+}
+
+body.dark-mode .table tbody,
+body.dark-mode .table tr,
+body.dark-mode .table td,
+body.dark-mode .table th {
+  background: #1f1f1f ;
+  color: white ;
+  border-color: #333 ;
+}
+
+/* bootstrap striped */
+body.dark-mode .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background: #252525 ;
+  color: white ;
+}
+
+/* links menu */
+body.dark-mode .menu-item {
+  color: white ;
+}
+
+body.dark-mode .menu-item:hover {
+  background: #2a2a2a ;
+}
+
+/* botões */
+body.dark-mode .btn {
+  color: white ;
+}
+
+/* footer */
+body.dark-mode .footer {
+  background: #1a1a1a ;
+  color: #ddd ;
+}
+
+body.dark-mode .pagination .page-link {
+  background-color: #1f1f1f;
+  color: white;
+  border-color: #444;
+}
+
+body.dark-mode .pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
 /* mobile continua abrindo lateral */
 @media (max-width: 992px) {
 
-  body.sidebar-open .app-shell {
-    grid-template-columns: 0 1fr;
+  .app-shell {
+    display: block;
+  }
+
+  .app-sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left .3s ease;
   }
 
   body.sidebar-open .app-sidebar {
-    position: fixed;
     left: 0;
-    width: 260px;
-    padding: 20px 14px;
   }
 
-  body.sidebar-open .brand span,
-  body.sidebar-open .menu-item span,
-  body.sidebar-open .menu-section {
-    display: inline;
+  .app-main {
+    width: 100%;
+    padding: 16px;
   }
 
-  body.sidebar-open .menu-item {
-    justify-content: flex-start;
-    padding: 10px 12px;
+  .input-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .input-group .form-control,
+  .input-group .btn {
+    width: 100%;
+  }
+
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start ;
+    gap: 12px;
   }
 }
