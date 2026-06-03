@@ -351,21 +351,23 @@ namespace ProjetoBiblioteca.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>
-            DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var emprestimo =
-                await _context.Emprestimos
-                    .FindAsync(id);
+            var emprestimo = await _context.Emprestimos
+                .Include(e => e.Livro)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (emprestimo != null)
             {
-                _context.Emprestimos
-                    .Remove(emprestimo);
 
+                if (emprestimo.DataRealDevolucao == null)
+                {
+                    emprestimo.Livro.QuantidadeEstoque++;
+                }
+
+                _context.Emprestimos.Remove(emprestimo);
                 await _context.SaveChangesAsync();
             }
-
             return RedirectToAction(nameof(Index));
         }
     }
