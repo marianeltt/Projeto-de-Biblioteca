@@ -1,58 +1,95 @@
 @model ProjetoBiblioteca.Models.Livro
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Livro";
 }
 
-<h1>Create</h1>
+<h1>Novo Livro</h1>
 
-<h4>Livro</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <label asp-for="NomeLivro" class="control-label"></label>
-                <input asp-for="NomeLivro" class="form-control" />
-                <span asp-validation-for="NomeLivro" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Autor" class="control-label"></label>
-                <input asp-for="Autor" class="form-control" />
-                <span asp-validation-for="Autor" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="QuantidadeEstoque" class="control-label"></label>
-                <input asp-for="QuantidadeEstoque" class="form-control" />
-                <span asp-validation-for="QuantidadeEstoque" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="FaixaEtariaPermitida" class="control-label"></label>
-                <input asp-for="FaixaEtariaPermitida" class="form-control" />
-                <span asp-validation-for="FaixaEtariaPermitida" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Categoria" class="control-label"></label>
-                <input asp-for="Categoria" class="form-control" />
-                <span asp-validation-for="Categoria" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="AnoPublicacao" class="control-label"></label>
-                <input asp-for="AnoPublicacao" class="form-control" />
-                <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger">
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="mb-3">
+        <label asp-for="NomeLivro"
+               class="form-label"></label>
 
-@section Scripts { 
+        <input asp-for="NomeLivro"
+               class="form-control" />
+
+        <span asp-validation-for="NomeLivro"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Autor"
+               class="form-label"></label>
+
+        <input asp-for="Autor"
+               class="form-control" />
+
+        <span asp-validation-for="Autor"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="QuantidadeEstoque"
+               class="form-label"></label>
+
+        <input asp-for="QuantidadeEstoque"
+               class="form-control" />
+
+        <span asp-validation-for="QuantidadeEstoque"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FaixaEtariaPermitida"
+               class="form-label"></label>
+
+        <input asp-for="FaixaEtariaPermitida"
+               class="form-control" />
+
+        <span asp-validation-for="FaixaEtariaPermitida"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Categoria"
+               class="form-label"></label>
+
+        <input asp-for="Categoria"
+               class="form-control" />
+
+        <span asp-validation-for="Categoria"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AnoPublicacao"
+               class="form-label"></label>
+
+        <input asp-for="AnoPublicacao"
+               class="form-control" />
+
+        <span asp-validation-for="AnoPublicacao"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Salvar
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Voltar
+    </a>
+
+</form>
+
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}       
+}

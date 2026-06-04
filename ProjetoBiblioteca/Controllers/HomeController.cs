@@ -26,7 +26,7 @@ public class HomeController : Controller
             _context.Livros.Sum(l => l.QuantidadeEstoque);
 
         ViewBag.TotalEmprestimos =
-            _context.Emprestimos.Count(e => e.DataPrevistaDevolucao == null);
+            _context.Emprestimos.Count(e => e.DataRealDevolucao == null);
 
         return View();
     }

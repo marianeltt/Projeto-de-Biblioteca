@@ -1,47 +1,80 @@
 ﻿@model ProjetoBiblioteca.ViewModels.LoginVM
 
-<h1>Login</h1>
+@{
+    ViewData["Title"] = "Login";
+}
 
-<form asp-action="Index" method="post">
+<div class="d-flex justify-content-center align-items-center"
+     style="min-height: 100vh;">
 
-    <div asp-validation-summary="ModelOnly"
-         class="text-danger">
+    <div class="card shadow p-4"
+         style="width: 100%; max-width: 450px;">
+
+        <h1 class="text-center mb-4">
+            Login
+        </h1>
+
+        <form asp-action="Index" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email"
+                       class="form-label">
+                    E-mail
+                </label>
+
+                <input asp-for="Email"
+                       class="form-control" />
+
+                <span asp-validation-for="Email"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Senha"
+                       class="form-label">
+                    Senha
+                </label>
+
+                <input asp-for="Senha"
+                       type="password"
+                       class="form-control" />
+
+                <span asp-validation-for="Senha"
+                      class="text-danger"></span>
+            </div>
+
+            @if (ViewBag.Erro != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Erro
+                </div>
+            }
+
+            <div class="d-grid gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Entrar
+                </button>
+
+                <a asp-controller="Usuarios"
+                   asp-action="Create"
+                   class="btn btn-outline-secondary">
+                    Criar Conta
+                </a>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <div class="mb-3">
-        <label>Email</label>
-        <input asp-for="Email"
-               class="form-control" />
+</div>
 
-        <span asp-validation-for="Email"
-              class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label>Senha</label>
-        <input asp-for="Senha"
-               type="password"
-               class="form-control" />
-
-        <span asp-validation-for="Senha"
-              class="text-danger"></span>
-    </div>
-
-    @if (ViewBag.Erro != null)
-    {
-        <div class="alert alert-danger">
-            @ViewBag.Erro
-        </div>
-    }
-
-    <button class="btn btn-primary">
-        Entrar
-    </button>
-
-    <a asp-controller="Usuarios"
-       asp-action="Create"
-       class="btn btn-link">
-        Criar conta
-    </a>
-
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

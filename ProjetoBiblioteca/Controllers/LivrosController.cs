@@ -60,7 +60,7 @@ namespace ProjetoBiblioteca.Controllers
             string busca,
             int pagina = 1)
         {
-            int itensPorPagina = 10;
+            int itensPorPagina = 5;
 
             var livros = _context.Livros.AsQueryable();
 
