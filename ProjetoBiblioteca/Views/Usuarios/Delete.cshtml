@@ -7,6 +7,13 @@
 
 <h1>Excluir Usuário</h1>
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
 <h3>Deseja realmente excluir?</h3>
 
 <hr />
