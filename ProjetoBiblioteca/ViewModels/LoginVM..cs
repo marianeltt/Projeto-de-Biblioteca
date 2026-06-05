@@ -2,6 +2,7 @@
 
 namespace ProjetoBiblioteca.ViewModels
 {
+    // ViewModel utilizada para autenticação de usuários.
     public class LoginVM
     {
         [Required(ErrorMessage = "Informe o e-mail")]

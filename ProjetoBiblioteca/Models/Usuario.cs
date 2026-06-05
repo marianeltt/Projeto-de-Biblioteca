@@ -2,8 +2,11 @@
 
 namespace ProjetoBiblioteca.Models
 {
+    // Representa os usuários cadastrados no sistema.
+    // Contém os dados pessoais e de acesso utilizado para empréstimos e autenticação.
     public class Usuario
     {
+        // Identificador único do usuário.
         public int Id { get; set; }
 
         [Display(Name = "Nome completo")]
@@ -28,7 +31,8 @@ namespace ProjetoBiblioteca.Models
             ErrorMessage = "A senha deve ter entre 6 e 50 caracteres.")]
         [DataType(DataType.Password)]
         public string Senha { get; set; } = string.Empty;
-
+        
+        // Define se o usuário está ativo ou inativo no sistema.
         [Display(Name = "Status")]
         [Required(ErrorMessage = "Informe o status.")]
         public bool Status { get; set; }

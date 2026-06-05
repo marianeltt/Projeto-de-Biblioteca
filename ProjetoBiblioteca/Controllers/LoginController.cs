@@ -13,13 +13,14 @@ namespace ProjetoBiblioteca.Controllers
         {
             _context = context;
         }
-
+        
+        // Exibe a tela de login.
         public IActionResult Index()
         {
             return View();
         }
-
-        [HttpPost]
+        
+        // Valida as credenciais do usuário e cria a sessão após autenticação.
         [HttpPost]
         public async Task<IActionResult> Index(LoginVM vm)
         {
@@ -32,12 +33,14 @@ namespace ProjetoBiblioteca.Controllers
                     u.Senha == vm.Senha &&
                     u.Status == true);
 
+            // Verifica se existe um usuário ativo com os dados informados.
             if (usuario == null)
             {
                 ViewBag.Erro = "Login inválido ou Usuário inativo";
                 return View(vm);
             }
 
+            // Armazena os dados do usuário na sessão.
             HttpContext.Session.SetInt32(
                 "UsuarioId",
                 usuario.Id);
@@ -55,6 +58,7 @@ namespace ProjetoBiblioteca.Controllers
                 "Home");
         }
         
+        // Encerra a sessão do usuário.
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

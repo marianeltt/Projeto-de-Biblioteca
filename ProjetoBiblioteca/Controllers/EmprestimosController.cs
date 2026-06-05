@@ -15,7 +15,9 @@ namespace ProjetoBiblioteca.Controllers
         {
             _context = context;
         }
-
+        
+        // Verifica se existe um usuário autenticado na sessão.
+        // Caso não exista ou esteja inativo, redireciona para o login.
         public override void OnActionExecuting(
             ActionExecutingContext context)
         {
@@ -58,7 +60,8 @@ namespace ProjetoBiblioteca.Controllers
                 .Include(e => e.Livro)
                 .OrderByDescending(e => e.DataEmprestimo)
                 .ToListAsync();
-
+            
+            // Atualiza automaticamente o status e a multa dos empréstimos que ainda não foram devolvidos.
             foreach (var e in emprestimos)
             {
                 if (e.DataRealDevolucao == null)
@@ -165,7 +168,8 @@ namespace ProjetoBiblioteca.Controllers
 
             if (usuario == null || livro == null)       
                 return NotFound();
-
+            
+            // Impede empréstimos de livros sem estoque disponível.
             if (livro.QuantidadeEstoque <= 0)
             {
                 ModelState.AddModelError("",
@@ -173,7 +177,8 @@ namespace ProjetoBiblioteca.Controllers
 
                 return View(vm);
             }
-
+            
+            // Calcula a idade do usuário para validar a faixa etária permitida do livro.
             var idade =
                 DateTime.Today.Year -
                 usuario.DataNascimento.Year;
@@ -192,7 +197,8 @@ namespace ProjetoBiblioteca.Controllers
 
                 return View(vm);
             }
-
+            
+            // Reduz 1 unidade do estoque quando registrar o empréstimo.
             livro.QuantidadeEstoque--;
 
             var emprestimo = new Emprestimo
@@ -299,7 +305,8 @@ namespace ProjetoBiblioteca.Controllers
 
             emprestimo.DataRealDevolucao =
                 DateTime.Today;
-
+            
+            // Devolve o livro ao estoque.
             emprestimo.Livro.QuantidadeEstoque++;
 
             if (DateTime.Today >
@@ -359,7 +366,7 @@ namespace ProjetoBiblioteca.Controllers
 
             if (emprestimo != null)
             {
-
+                // Se o empréstimo ainda estiver ativo, devolve o livro ao estoque antes de excluir.
                 if (emprestimo.DataRealDevolucao == null)
                 {
                     emprestimo.Livro.QuantidadeEstoque++;

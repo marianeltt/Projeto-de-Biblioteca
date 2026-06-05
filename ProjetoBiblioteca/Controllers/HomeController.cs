@@ -13,7 +13,8 @@ public class HomeController : Controller
     {
         _context = context;
     }
-
+    
+    // Carrega os dados exibidos no dashboard inicial.
     public IActionResult Index()
     {
         ViewBag.TotalUsuarios =

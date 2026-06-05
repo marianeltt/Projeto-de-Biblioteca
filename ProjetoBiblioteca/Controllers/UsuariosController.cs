@@ -21,6 +21,7 @@ namespace ProjetoBiblioteca.Controllers
         }
 
         // GET: Usuarios
+        // Lista os usuários cadastrados com filtro por nome ou e-mail.
         public async Task<IActionResult> Index(string busca)
         {
             ViewData["busca"] = busca;
@@ -72,6 +73,7 @@ namespace ProjetoBiblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeCompleto,DataNascimento,Email,Senha,Status")] Usuario usuario)
         {
+            // Impede o cadastro de usuários com e-mail duplicado.
             if (_context.Usuarios.Any(u => u.Email == usuario.Email))
             {
                 ModelState.AddModelError("Email", "Este e-mail já está cadastrado.");
@@ -82,7 +84,8 @@ namespace ProjetoBiblioteca.Controllers
             {
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
-
+                
+                // Inicia automaticamente a sessão do usuário recém-cadastrado.
                 HttpContext.Session.SetInt32(
                     "UsuarioId",
                     usuario.Id);
@@ -185,6 +188,7 @@ namespace ProjetoBiblioteca.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Impede a exclusão de usuários que possuem empréstimos registrados.
             var possuiEmprestimos = await _context.Emprestimos
                 .AnyAsync(e => e.UsuarioId == id);
 

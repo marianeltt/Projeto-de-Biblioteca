@@ -56,6 +56,7 @@ namespace ProjetoBiblioteca.Controllers
         }
         
         // GET: Livros
+        // Lista os livros com busca e paginação.
         public async Task<IActionResult> Index(
             string busca,
             int pagina = 1)
@@ -64,7 +65,7 @@ namespace ProjetoBiblioteca.Controllers
 
             var livros = _context.Livros.AsQueryable();
 
-            // busca
+            // Busca os livros pelo nome informado.
             if (!string.IsNullOrWhiteSpace(busca))
             {
                 livros = livros.Where(l =>
@@ -127,6 +128,7 @@ namespace ProjetoBiblioteca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeLivro,Autor,QuantidadeEstoque,FaixaEtariaPermitida,Categoria,AnoPublicacao")] Livro livro)
         {
+            // Impede cadastro de estoque negativo.
             if (livro.QuantidadeEstoque < 0)
             {
                 ModelState.AddModelError("QuantidadeEstoque",
@@ -226,6 +228,7 @@ namespace ProjetoBiblioteca.Controllers
         {
             var livro = await _context.Livros.FindAsync(id);
 
+            // Verifica se o livro possui empréstimos.
             var possuiEmprestimos = await _context.Emprestimos
                 .AnyAsync(e => e.LivroId == id);
 

@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ProjetoBiblioteca.Models;
 
+// Contexto principal do Entity Framework.
+// Responsável pelo acesso às tabelas do sistema.
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)

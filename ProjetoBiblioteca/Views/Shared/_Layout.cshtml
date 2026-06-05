@@ -1,9 +1,12 @@
 ﻿@{
+    // Obtém o título da página atual.
     var title = ViewData["Title"] as string ?? "ProjetoBiblioteca";
 
+    // Identifica o controller atual.
     var controller =
         ViewContext.RouteData.Values["controller"]?.ToString();
 
+    // Verifica se a página atual é a tela de login.
     bool estaNoLogin = controller == "Login";
 }
 
@@ -29,6 +32,7 @@
 
 <body class="app-body">
 
+<!-- Layout simplificado para a tela de login -->
 @if (estaNoLogin)
 {
     <main class="container py-5">
@@ -166,6 +170,7 @@ else
 
 @RenderSection("Scripts", required: false)
 
+<!-- Script para recolher/expandir o menu lateral -->
 <script>
     document.getElementById('burger')
         ?.addEventListener('click', function () {
@@ -173,6 +178,7 @@ else
         });
 </script>
 
+<!-- Script para alternar entre tema claro e escuro -->
 <script>
     document
         .getElementById("btnTema")
